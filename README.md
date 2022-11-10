@@ -133,7 +133,7 @@ $ ninja -C build
 ### To install
 
 ``` bash
-$ ninja -C build install
+$ sudo ninja -C build install
 ```
 
 Default install prefix is `/usr/local`, you can change it with `meson configure -Dprefix=<path> build`
