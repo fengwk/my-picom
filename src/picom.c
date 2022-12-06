@@ -1,4 +1,3 @@
-// SPDX-License-Identifier: MIT
 /*
  * Compton - a compositor for X11
  *
@@ -2144,6 +2143,7 @@ static session_t *session_init(int argc, char **argv, Display *dpy,
 	      c2_list_postprocess(ps, ps->o.invert_color_list) &&
 	      c2_list_postprocess(ps, ps->o.opacity_rules) &&
 	      c2_list_postprocess(ps, ps->o.rounded_corners_blacklist) &&
+	      c2_list_postprocess(ps, ps->o.animation_blacklist) &&
 	      c2_list_postprocess(ps, ps->o.focus_blacklist))) {
 		log_error("Post-processing of conditionals failed, some of your rules "
 		          "might not work");

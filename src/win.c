@@ -703,11 +703,8 @@ void win_process_update_flags(session_t *ps, struct managed_win *w) {
 		}
 
 		// Ignore animations all together if set to none on window type basis
-		if (ps->o.wintype_option[w->window_type].animation == 0) {
-			w->g = w->pending_g;
-
 		// Update window geometry
-		} else if (ps->o.animations) {
+		if (win_should_animation(ps, w)) {
 			if (!was_visible) {
 				// Set window-open animation
 				init_animation(ps, w);
@@ -1141,6 +1138,24 @@ bool win_should_fade(session_t *ps, const struct managed_win *w) {
 		return false;
 	}
 	return ps->o.wintype_option[w->window_type].fade;
+}
+
+/**
+ * Determine if a window should animation.
+ */
+bool win_should_animation(session_t *ps, const struct managed_win *w) {
+    if (!ps->o.animations) {
+        return false;
+    }
+    if (ps->o.wintype_option[w->window_type].animation == 0) {
+        log_debug("Animation disabled by window_type");
+        return false;
+    }
+    if (c2_match(ps, w, ps->o.animation_blacklist, NULL)) {
+        log_debug("Animation disabled by animation_exclude");
+        return false;
+    }
+    return true;
 }
 
 /**
